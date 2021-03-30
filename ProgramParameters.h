@@ -31,10 +31,22 @@ struct PressureIterationData {
     double gamma;
 };
 
+struct ProblemParameters {
+    double Re;
+    double UI;
+    double VI;
+    double PI;
+    int wW;
+    int wE;
+    int wN;
+    int wS;
+};
+
 struct ProgramParamerters {
     GeomertyData geometryData;
     TimeSteppingData timeSteppingData;
     PressureIterationData pressureiterationData;
+    ProblemParameters problemParameters;
 };
 
 // Abstract Function
