@@ -35,14 +35,14 @@ class FIELD {
                      x = 0     x=x     x = x_max - 1
     */
     protected : 
-        int max_x ;
-        int max_y ;
+        int xSize ;
+        int ySize ;
         NodeT ** Field;
 
     public :
         FIELD(const int max_x,const int max_y) {
-            this->max_x = max_x;
-            this->max_y = max_y;
+            this->xSize = max_x;
+            this->ySize = max_y;
             this->Field = new NodeT*[max_x];
             for (int i = 0 ; i < max_x ; i++) {
                 this->Field[i] = new NodeT[max_y];
@@ -51,15 +51,15 @@ class FIELD {
         }
 
         FIELD(const FIELD<NodeT,T> & other ) {
-            this->max_x = other.max_x;
-            this->max_y = other.max_y;
-            this->Field = new NodeT*[max_x];
+            this->xSize = other.xSize;
+            this->ySize = other.ySize;
+            this->Field = new NodeT*[xSize];
 
-            for (int i = 0 ; i < max_x ; i++) {
-                this->Field[i] = new NodeT[max_y];
+            for (int i = 0 ; i < xSize ; i++) {
+                this->Field[i] = new NodeT[ySize];
             }
-            for (int i = 0 ; i < other.max_x ; i++) {
-                for (int j = 0 ; j < other.max_y ; j++) {
+            for (int i = 0 ; i < other.xSize ; i++) {
+                for (int j = 0 ; j < other.ySize ; j++) {
                     NodeT & tmp = other.Field[i][j];
                     set(i , j , tmp.val);
                 }
@@ -67,7 +67,7 @@ class FIELD {
         }
 
         ~FIELD() {
-            for (int i = 0 ; i < this->max_x ; i++) {
+            for (int i = 0 ; i < this->xSize ; i++) {
                 delete[] this->Field[i];
             }
             delete[] this->Field;
@@ -75,9 +75,9 @@ class FIELD {
 
 
         void printField() {
-            std::cout << "Size : " << "(x,y) = " << '(' << this->max_x << ',' << this->max_y << ')' << '\n';
-            for (int y = this->max_y - 1 ; y >= 0 ; y--) {
-                for (int x = 0 ; x < this->max_x ; x++) {
+            std::cout << "Size : " << "(x,y) = " << '(' << this->xSize << ',' << this->ySize << ')' << '\n';
+            for (int y = this->ySize - 1 ; y >= 0 ; y--) {
+                for (int x = 0 ; x < this->xSize ; x++) {
                     NodeT tmp = get(x,y);
                     std::cout << tmp.val << ' ';
                 }
@@ -95,11 +95,11 @@ class FIELD {
         }
 
         int getXSize() {
-            return this->max_x;
+            return this->xSize;
         }
 
         int getYSize() {
-            return this->max_y;
+            return this->ySize;
         }
 
         void saveField() {
@@ -123,9 +123,9 @@ class VelocityField {
             return;
         }
 
-        VelocityField(int x_max , int y_max) {
-            this->u = new FIELD<FieldDouble>(x_max , y_max);
-            this->v = new FIELD<FieldDouble>(x_max , y_max);
+        VelocityField(int xSize , int ySize) {
+            this->u = new FIELD<FieldDouble>(xSize , ySize);
+            this->v = new FIELD<FieldDouble>(xSize , ySize);
         }
         
         VelocityField(const VelocityField & other) {
@@ -153,8 +153,8 @@ class PressureField {
         PressureField() {
             this->p = nullptr;
         }
-        PressureField(int x_max , int y_max) {
-            this->p = new FIELD<FieldDouble>(x_max , y_max);
+        PressureField(int xSize , int ySize) {
+            this->p = new FIELD<FieldDouble>(xSize , ySize);
         }
         PressureField(const PressureField & other) {
             this->p = new FIELD< FieldDouble > (*other.p);

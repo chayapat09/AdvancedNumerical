@@ -24,9 +24,9 @@ class FG {
             return;
         }
 
-        FG(int x_max , int y_max) {
-            this->F = new FIELD<FieldDouble>(x_max , y_max);
-            this->G = new FIELD<FieldDouble>(x_max , y_max);
+        FG(int xSize , int ySize) {
+            this->F = new FIELD<FieldDouble>(xSize , ySize);
+            this->G = new FIELD<FieldDouble>(xSize , ySize);
         }
         FG(const FG & other) {
             F = new FIELD< FieldDouble > (*other.F);

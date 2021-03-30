@@ -15,9 +15,9 @@ class RHS {
             return;
         }
 
-        RHS(int x_max , int y_max) {
-            this->Rhs = new FIELD<FieldDouble>(x_max , y_max);
-            this->Rhs = new FIELD<FieldDouble>(x_max , y_max);
+        RHS(int xSize , int ySize) {
+            this->Rhs = new FIELD<FieldDouble>(xSize , ySize);
+            this->Rhs = new FIELD<FieldDouble>(xSize , ySize);
         }
         RHS& operator=(RHS other) {
             using std::swap;

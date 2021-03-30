@@ -1,3 +1,6 @@
+#ifndef _POISSION_INCLUDED_
+#define _POISSION_INCLUDED_
+
 #include "Field.h"
 #include "RHS.h"
 #include "ProgramParameters.h"
@@ -10,3 +13,5 @@ void initRes(PressureField & res , ProgramParamerters & params) {
 void poission(PressureField & pressure , RHS & rhs ,PressureField & res , ProgramParamerters &params ) {
     std::cout << "Compute Poission" << '\n';
 }
+
+#endif
