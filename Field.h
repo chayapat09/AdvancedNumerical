@@ -40,12 +40,12 @@ class FIELD {
         NodeT ** Field;
 
     public :
-        FIELD(const int max_x,const int max_y) {
-            this->xSize = max_x;
-            this->ySize = max_y;
-            this->Field = new NodeT*[max_x];
-            for (int i = 0 ; i < max_x ; i++) {
-                this->Field[i] = new NodeT[max_y];
+        FIELD(const int xSize,const int ySize) {
+            this->xSize = xSize;
+            this->ySize = ySize;
+            this->Field = new NodeT*[xSize];
+            for (int i = 0 ; i < xSize ; i++) {
+                this->Field[i] = new NodeT[ySize];
             }
 
         }
