@@ -56,6 +56,8 @@ int main() {
 
     // Same As
     std::cout << "Field (0,0) Node Val = " << field[0][0].val << "\n\n";
+    
+    // This is ok -> field[0][0].val++;
 
     // This Field can easily copy
     // Set some random xSize,ySize

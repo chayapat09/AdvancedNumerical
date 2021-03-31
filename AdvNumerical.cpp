@@ -57,11 +57,13 @@ int main() {
 
     INIT_UVP(velocityField , pressureField , programParameter);
 
-    // 3.COMP_DELT
-    // ?? 
 
 
     for (int i = 0 ; i < 1 ; i++) {
+
+        // 3.COMP_DELT
+        // ?? 
+
         // 4.SETBCOND
         setBoundaryCondition(velocityField , programParameter);
 
