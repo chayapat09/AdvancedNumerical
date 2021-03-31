@@ -58,8 +58,27 @@ struct ProgramParamerters {
 
 void initProblemParams(ProgramParamerters & params){
     // Initialized Problem parameters
-    params.geometryData.imax = 4;
-    params.geometryData.jmax = 4;
+    params.geometryData.xlength = 10;
+    params.geometryData.xlength = 10;
+    params.geometryData.imax = 20;
+    params.geometryData.jmax = 20;
+    params.geometryData.delx = 0.1;
+    params.geometryData.dely = 0.1;
+    params.timeSteppingData.delt = 0.025;
+    
+    params.timeSteppingData.tau = 0.5;
+
+    params.problemParameters.wN = 2;
+    params.problemParameters.wS = 2;
+    params.problemParameters.wE = 3;
+    params.problemParameters.wW = 3;
+
+    params.problemParameters.PI = 1;
+    params.problemParameters.UI = 1;
+    params.problemParameters.VI = 1;
+    params.problemParameters.Re = 20;
+
+    params.timeSteppingData.t_end = 30;
     // Ex.
     // params.geometryData.delx = 20;
 

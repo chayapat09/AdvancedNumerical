@@ -82,12 +82,10 @@ int main() {
         computeRHS(rhs ,fg ,  programParameter);
 
         // 8.POISSON
-        PressureField res;
-        initRes(res , programParameter);
-        poission(pressureField , rhs , res , programParameter);
+        poission(pressureField , rhs , programParameter);
 
         // 9.ADAP_UV
-        updateVelocityField(velocityField , fg , res , programParameter);
+        updateVelocityField(velocityField , fg , pressureField , programParameter);
 
     }
 
