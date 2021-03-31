@@ -50,8 +50,12 @@ int main() {
     field.set(0,0 , 5.555);
     Node<double> & node = field.get(0,0);
     std::cout << "Field (0,0) Node Val = " << node.val << "\n";
+
     // Same As
-    std::cout << "Field (0,0) Node Val = " << field.get(0,0).val << "\n\n";
+    std::cout << "Field (0,0) Node Val = " << field.get(0,0).val << '\n';
+
+    // Same As
+    std::cout << "Field (0,0) Node Val = " << field[0][0].val << "\n\n";
 
     // This Field can easily copy
     // Set some random xSize,ySize

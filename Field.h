@@ -79,6 +79,10 @@ class FIELD {
             return *this;
         }
 
+        NodeT* operator[](const int i) {
+            return this->Field[i];
+        }
+
         ~FIELD() {
             for (int i = 0 ; i < this->xSize ; i++) {
                 delete[] this->Field[i];
