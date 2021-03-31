@@ -1,11 +1,14 @@
 #include <iostream>
-#include <vector>
+
+
+#define _DEBUG_
 
 #include "ProgramParameters.h"
 #include "Field.h"
 #include "FG.h"
 #include "RHS.h"
 #include "Poisson.h"
+#include "ProgressBar.h"
 // using namespace std; 
 
 /* Discramer
@@ -39,7 +42,9 @@ void setSpecificBoundaryCondition(VelocityField &velocity , ProgramParamerters &
     The new velocities are calculated according to (3.34) and (3.35).
 */
 void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pressure , ProgramParamerters & params ) {
+    #ifdef _DEBUG_
     std::cout << "Velocity Field Are upadted!" << '\n';
+    #endif
 }
 
 int main() {
@@ -57,9 +62,12 @@ int main() {
 
     INIT_UVP(velocityField , pressureField , programParameter);
 
+    // Assume const delt
+    uint32_t checkPointPeriod = (programParameter.timeSteppingData.t_end / programParameter.timeSteppingData.delt) / 1000;
+    checkPointPeriod = std::max(checkPointPeriod , 1u);
 
-
-    for (int i = 0 ; i < 1 ; i++) {
+    for (; programParameter.timeSteppingData.t <= programParameter.timeSteppingData.t_end ; 
+            programParameter.timeSteppingData.t += programParameter.timeSteppingData.delt) {
 
         // 3.COMP_DELT
         // ?? 
@@ -87,7 +95,14 @@ int main() {
         // 9.ADAP_UV
         updateVelocityField(velocityField , fg , pressureField , programParameter);
 
-    }
+        programParameter.timeSteppingData.n++;
 
+        #ifndef _DEBUG_
+
+        if (programParameter.timeSteppingData.n % checkPointPeriod == 0) {
+            showProgress(programParameter);
+        }
+        #endif
+    }
     
 }

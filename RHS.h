@@ -35,7 +35,9 @@ class RHS {
 };
 
 void initRHS(RHS & rhs , ProgramParamerters & params) {
+    #ifdef _DEBUG_
     std::cout << "INIT RHS" << '\n';
+    #endif
     // rhs.rhs = new FIELD< FieldDouble >(...)
     // Uncomment and then add to ...
 }
@@ -44,7 +46,9 @@ void computeRHS(RHS & rhs , FG & fg , ProgramParamerters & params) {
         /*
             COMPUTE Rhs FIELDS using FG FIELDS and ProgramParamerters
         */
+        #ifdef _DEBUG_
         std::cout << "Computed RHS" << '\n';
+        #endif
 }
 
 

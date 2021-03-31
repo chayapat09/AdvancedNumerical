@@ -47,7 +47,9 @@ class FG {
 };
 
 void initFG(FG & fg , ProgramParamerters & params) {
+    #ifdef _DEBUG_
     std::cout << "INIT FG" << '\n';
+    #endif
     // fg.F = new FIELD< FieldDouble >(...)
     // fg.G = new FIELD< FieldDouble >(...)
     // Uncomment and then add to ...
@@ -57,7 +59,9 @@ void computeFG(VelocityField & velocity ,FG & fg,  ProgramParamerters & params) 
         /*
             COMPUTE F and G FIELDS using Velocity FIELDS and ProgramParamerters
         */
+        #ifdef _DEBUG_
         std::cout << "Computed FG" << '\n';
+        #endif
 }
 
 

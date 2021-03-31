@@ -20,6 +20,7 @@ struct TimeSteppingData {
     double t_end;
     double delt;
     double tau;
+    long long n;
 };
 
 struct PressureIterationData {
@@ -78,7 +79,11 @@ void initProblemParams(ProgramParamerters & params){
     params.problemParameters.VI = 1;
     params.problemParameters.Re = 20;
 
-    params.timeSteppingData.t_end = 30;
+    params.timeSteppingData.t_end = 10;
+
+    params.timeSteppingData.t = 0;
+    params.timeSteppingData.n = 0;
+
     // Ex.
     // params.geometryData.delx = 20;
 

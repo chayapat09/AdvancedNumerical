@@ -92,6 +92,7 @@ class FIELD {
 
 
         void printField() {
+            #ifdef _DEBUG_
             std::cout << "Size : " << "(x,y) = " << '(' << this->xSize << ',' << this->ySize << ')' << '\n';
             for (int y = this->ySize - 1 ; y >= 0 ; y--) {
                 for (int x = 0 ; x < this->xSize ; x++) {
@@ -100,6 +101,7 @@ class FIELD {
                 }
                 std::cout << '\n';
             }
+            #endif
         }
 
         void set(int x , int y , T value) {
@@ -195,8 +197,11 @@ class PressureField {
 // Function implemantation
 void INIT_UVP(VelocityField &velocity , PressureField &pressure , ProgramParamerters &params) {
     // NOTE FREE THESE VARIABLES
+    #ifdef _DEBUG_
     std::cout << "Field Initialized" << '\n';
     std::cout << params.geometryData.imax << ' ' << params.geometryData.jmax << '\n';
+    #endif
+
     velocity.u = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
     velocity.v = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
 
