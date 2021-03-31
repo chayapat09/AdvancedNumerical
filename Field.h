@@ -20,9 +20,9 @@ class Node {
 
 template <typename NodeT , typename T >
 class FIELD {
-    // A 2D FIELD IN CORDINATE x,y HANDLER
 
     /*
+        A 2D FIELD IN CORDINATE x,y HANDLER
         Standared Cordinates Convention
 
         y = y_max -1 |-----------------|
@@ -64,6 +64,16 @@ class FIELD {
                     set(i , j , tmp.val);
                 }
             }
+        }
+
+        FIELD& operator=(FIELD other) {
+            using std::swap;
+            
+            swap(this->xSize , other.xSize);
+            swap(this->ySize , other.ySize);
+            swap(this->Field , other.Field);
+
+            return *this;
         }
 
         ~FIELD() {
