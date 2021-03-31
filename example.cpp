@@ -49,7 +49,9 @@ int main() {
     // Set cordinate (0,0) to node of val = 5.555
     field.set(0,0 , 5.555);
     Node<double> & node = field.get(0,0);
-    std::cout << "Field (0,0) Node Val = " << node.val << "\n\n";
+    std::cout << "Field (0,0) Node Val = " << node.val << "\n";
+    // Same As
+    std::cout << "Field (0,0) Node Val = " << field.get(0,0).val << "\n\n";
 
     // This Field can easily copy
     // Set some random xSize,ySize
@@ -69,14 +71,14 @@ int main() {
     // We constructed these field to Type-Srict Field
     // 1.VelocityField
     // 2.PressureField
-    // 3.FG Field
-    // 4.RHS FIELD
+    // 3.FG
+    // 4.RHS
 
     VelocityField velocity(10,10);
     // velocity.u // u component of velocity
     // velocity.v // v component of velocity
 
-    // Each component are pointers to FIELD<Node<double> , double> (FIELD<Node<double> , double> *)
+    // Each component are [pointers to FIELD<Node<double> , double> ] or [FIELD<Node<double> , double> *]
     for (int x = 0 ; x < velocity.u->getXSize() ; x++) {
         for(int y = 0 ; y < velocity.u->getYSize() ; y++) {
             if (x - y == 0 || x + y == 9) {

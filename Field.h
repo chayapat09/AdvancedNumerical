@@ -33,6 +33,9 @@ class FIELD {
                      |-----------------|
         y = 0        |-----------------|
                      x = 0     x=x     x = x_max - 1
+
+        All debugging and assertions of Fields can do here Ex. segmentation Fault || Force Boundary condition 
+        and Exception of get(x,y) that out of bond
     */
     protected : 
         int xSize ;

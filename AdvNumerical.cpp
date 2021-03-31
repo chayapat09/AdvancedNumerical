@@ -39,7 +39,6 @@ void setSpecificBoundaryCondition(VelocityField &velocity , ProgramParamerters &
     The new velocities are calculated according to (3.34) and (3.35).
 */
 void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pressure , ProgramParamerters & params ) {
-    // Set velocity = new velocityField
     std::cout << "Velocity Field Are upadted!" << '\n';
 }
 
