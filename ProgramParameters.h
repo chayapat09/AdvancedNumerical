@@ -26,7 +26,7 @@ struct PressureIterationData {
     int itermax;
     int it;
     double res;
-    double rps;
+    double eps;
     double omg;
     double gamma;
 };
