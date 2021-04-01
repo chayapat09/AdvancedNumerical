@@ -29,7 +29,7 @@ void computeDelt(VelocityField &velocity, ProgramParamerters & params){
     double absVmax = velocity.v->findAbsoluteMax();
     
     //exp is a short term for expression
-    double exp1 = (Re/2) * ( 1/ ( 1 / ( delx*delx ) + 1 / ( dely*dely ) ) );
+    double exp1 = (Re/2.) * ( 1./ ( 1. / ( delx*delx ) + 1. / ( dely*dely ) ) );
     double exp2 = delx/absUmax;
     double exp3 = dely/absVmax;
     params.timeSteppingData.delt = tau* std::min( exp1, std::min( exp2, exp3 ) );
