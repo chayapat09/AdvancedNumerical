@@ -17,7 +17,23 @@
     Field Value Type is Double by Default
 */
 
+/*
+    The stepsize delt for the next time step is calculated according to (3.50). In case of negative tau the stepsize read in
+    READ-PARAMETER is to be used.
+*/
 
+void computeDelt(VelocityField &velocity, ProgramParamerters & params){
+    double tau = params.timeSteppingData.tau, Re = params.problemParameters.Re;
+    double delx = params.geometryData.delx, dely = params.geometryData.dely;
+    double absUmax = velocity.u->findAbsoluteMax();
+    double absVmax = velocity.v->findAbsoluteMax();
+    
+    //exp is a short term for expression
+    double exp1 = (Re/2) * ( 1/ ( 1 / ( delx*delx ) + 1 / ( dely*dely ) ) );
+    double exp2 = delx/absUmax;
+    double exp3 = dely/absVmax;
+    params.timeSteppingData.delt = tau* std::min( exp1, std::min( exp2, exp3 ) );
+}
 
 /*
 The boundary values for the arrays U and V are set depending on the boundary 
@@ -43,7 +59,7 @@ void setSpecificBoundaryCondition(VelocityField &velocity , ProgramParamerters &
 */
 void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pressure , ProgramParamerters & params ) {
     #ifdef _DEBUG_
-    std::cout << "Velocity Field Are upadted!" << '\n';
+    std::cout << "Velocity Field Are updated!" << '\n';
     #endif
 }
 
@@ -70,7 +86,7 @@ int main() {
             programParameter.timeSteppingData.t += programParameter.timeSteppingData.delt) {
 
         // 3.COMP_DELT
-        // ?? 
+        // computeDelt(pressureField, programParameter);
 
         // 4.SETBCOND
         setBoundaryCondition(velocityField , programParameter);

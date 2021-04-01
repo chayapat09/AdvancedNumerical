@@ -109,6 +109,42 @@ class FIELD {
             tmp.val = value;
         } 
 
+        void setAll(T value){
+            for (int y = this->ySize - 1 ; y >= 0 ; y--) {
+                for (int x = 0 ; x < this->xSize ; x++) {
+                    (this->Field)[x][y].val = value;
+                }
+            }
+        }
+        
+        T findMax(){
+            if(this->xSize >= 1 && this->ySize >= 1){
+                //has at least 1 point
+                T maxVal = (this->Field)[0][0].val;
+                for (int y = this->ySize - 1 ; y >= 0 ; y--) {
+                    for (int x = 0 ; x < this->xSize ; x++) {
+                        maxVal = std::max( maxVal, (this->Field)[x][y].val );
+                    }
+                }
+                return maxVal;
+            }
+            throw "This field is still empty!";
+        }
+
+        T findAbsoluteMax(){
+            if(this->xSize >= 1 && this->ySize >= 1){
+                //has at least 1 point
+                T maxVal = std::abs((this->Field)[0][0].val);
+                for (int y = this->ySize - 1 ; y >= 0 ; y--) {
+                    for (int x = 0 ; x < this->xSize ; x++) {
+                        maxVal = std::max( maxVal, std::abs((this->Field)[x][y].val ));
+                    }
+                }
+                return maxVal;
+            }
+            throw "This field is still empty!";
+        }
+
         NodeT& get(int x , int y) {
             return (this->Field)[x][y];
         }
@@ -188,6 +224,7 @@ class PressureField {
         ~PressureField() {
             delete this->p;
         }
+
 };
 
 // Abstract function
@@ -206,6 +243,10 @@ void INIT_UVP(VelocityField &velocity , PressureField &pressure , ProgramParamer
     velocity.v = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
 
     pressure.p = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
+
+    (velocity.u)->setAll(params.problemParameters.UI);
+    (velocity.v)->setAll(params.problemParameters.VI);
+    (pressure.p)->setAll(params.problemParameters.PI);
 }
 
 #endif
