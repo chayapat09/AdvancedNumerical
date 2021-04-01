@@ -3,6 +3,7 @@
 
 #include "./FieldStreamOperator/main.cpp"
 #include "./VelocityFieldStreamOperator/main.cpp"
+#include "./PressureFieldStreamOperator/main.cpp"
 using namespace std;
 
 int main() {
@@ -22,6 +23,17 @@ int main() {
     cout << "VelocityFieldStreamOperatorTest : ";
     try {
         VelocityFieldStreamOperatorTest();
+        cout << "PASS";
+    }
+    catch(const std::exception& e) {
+        cout << "FAILED";
+    }
+    cout << '\n';
+
+    // PressureFieldStreamOperatorTest
+    cout << "PressureFieldStreamOperatorTest : ";
+    try {
+        PressureFieldStreamOperatorTest();
         cout << "PASS";
     }
     catch(const std::exception& e) {

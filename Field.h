@@ -288,6 +288,25 @@ class PressureField {
 
             return *this;
         }
+
+        friend std::istream& operator>>(std::istream& is, PressureField & pressureField) {
+            if (pressureField.p == nullptr) pressureField.p = new FIELD<FieldDouble>(1 , 1);
+            std::string tmp;
+            is >> tmp;
+            if (tmp != "P") throw "pressureField >> Operator Failed !";
+            is >> (*pressureField.p);
+
+            return is;
+        }
+
+        friend std::ostream& operator<<(std::ostream& os , PressureField &pressureField) {
+            if (pressureField.p == nullptr) throw "p is Null pointer please initialized it first!";
+
+            os << "P" << '\n';
+            os << (*pressureField.p);
+
+            return os;
+        }
         ~PressureField() {
             delete this->p;
         }
