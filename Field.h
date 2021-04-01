@@ -2,6 +2,7 @@
 #define _FIELD_INCLUDED_
 
 #include <iostream>
+#include <iomanip>
 #include "ProgramParameters.h"
 #define FieldDouble Node<double> , double
 
@@ -15,6 +16,16 @@ class Node {
         }
         Node() {
             this->val = 0;
+        }
+
+        friend std::istream& operator>>(std::istream& is, Node& node) {
+            is >> node.val;
+            return is;
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, Node& node) {
+            os << node.val;
+            return os;
         }
 };
 
@@ -43,9 +54,13 @@ class FIELD {
         NodeT ** Field;
 
     public :
+
         FIELD(const int xSize,const int ySize) {
             this->xSize = xSize;
             this->ySize = ySize;
+            if (xSize == 0 || ySize == 0) {
+                throw "xSize and ySize Need to > 0";
+            }
             this->Field = new NodeT*[xSize];
             for (int i = 0 ; i < xSize ; i++) {
                 this->Field[i] = new NodeT[ySize];
@@ -90,14 +105,42 @@ class FIELD {
             delete[] this->Field;
         }
 
+        // Overloading std::istream funcitons here
+        friend std::istream& operator>>(std::istream& is, FIELD & field) {
+            int xSize = 1;
+            int ySize = 1;
+            is >> xSize >> ySize;
+            FIELD tmp(xSize,ySize);
+            for (int y = ySize - 1 ; y >= 0 ; y--) {
+                for (int x = 0 ; x < xSize ; x++) {
+                    is >> tmp[x][y];
+                }
+            }
+            field = tmp;
+            return is;
+        }
+
+        // Overloading std::ostream funcitons here
+        friend std::ostream& operator<<(std::ostream& os, FIELD& field) {
+            int xSize = field.getXSize();
+            int ySize = field.getYSize();
+            os << xSize << ' ' << ySize << '\n';
+            for (int y = ySize - 1 ; y >= 0 ; y--) {
+                for (int x = 0 ; x < xSize ; x++) {
+                    os << std::setprecision(10) << field[x][y] << ' ';
+                }
+                os << '\n';
+            }
+            return os;
+        }
+
 
         void printField() {
-            #ifdef _DEBUG_
+            #ifdef DEBUG
             std::cout << "Size : " << "(x,y) = " << '(' << this->xSize << ',' << this->ySize << ')' << '\n';
             for (int y = this->ySize - 1 ; y >= 0 ; y--) {
                 for (int x = 0 ; x < this->xSize ; x++) {
-                    NodeT tmp = get(x,y);
-                    std::cout << tmp.val << ' ';
+                    std::cout << get(x,y) << ' ';
                 }
                 std::cout << '\n';
             }
@@ -149,11 +192,11 @@ class FIELD {
             return (this->Field)[x][y];
         }
 
-        int getXSize() {
+        int getXSize() const {
             return this->xSize;
         }
 
-        int getYSize() {
+        int getYSize() const {
             return this->ySize;
         }
 
@@ -195,6 +238,30 @@ class VelocityField {
 
             return *this;
         }
+
+        friend std::istream& operator>>(std::istream& is, VelocityField & velocityField) {
+            if (velocityField.u == nullptr) velocityField.u = new FIELD<FieldDouble>(1 , 1);
+            if (velocityField.v == nullptr) velocityField.v = new FIELD<FieldDouble>(1 , 1);
+            std::string tmp;
+            is >> tmp;
+            is >> (*velocityField.u);
+
+            is >> tmp;
+            is >> (*velocityField.v);
+            return is;
+        }
+
+        friend std::ostream& operator<<(std::ostream& os , VelocityField &velocityField) {
+            if (velocityField.u == nullptr) throw "U is Null pointer please initialized it first!";
+            if (velocityField.v == nullptr) throw "V is Null pointer please initialized it first!";
+            os << "U" << '\n';
+            os << (*velocityField.u);
+            os << '\n';
+            os << "V" << '\n';
+            os << (*velocityField.v);
+
+            return os;
+        }
         ~VelocityField() {
             delete this->u;
             delete this->v;
@@ -234,7 +301,7 @@ class PressureField {
 // Function implemantation
 void INIT_UVP(VelocityField &velocity , PressureField &pressure , ProgramParamerters &params) {
     // NOTE FREE THESE VARIABLES
-    #ifdef _DEBUG_
+    #ifdef DEBUG
     std::cout << "Field Initialized" << '\n';
     std::cout << params.geometryData.imax << ' ' << params.geometryData.jmax << '\n';
     #endif

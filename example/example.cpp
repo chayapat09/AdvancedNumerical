@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Field.h"
+#include "../Field.h"
 
 int main() {
     

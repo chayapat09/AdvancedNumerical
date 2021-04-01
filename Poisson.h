@@ -78,7 +78,7 @@ void poission(PressureField & pressure , RHS & rhs , ProgramParamerters &params 
         
         // Break due to r
         if (r_inf < params.pressureiterationData.eps || r_inf < params.pressureiterationData.eps * p_inf) {
-            #ifdef _DEBUG_
+            #ifdef DEBUG
             std::cout << "SOR Break condition reached" << '\n';
             #endif
             break;

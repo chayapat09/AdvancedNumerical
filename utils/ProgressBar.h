@@ -1,4 +1,4 @@
-#include "ProgramParameters.h"
+#include "../ProgramParameters.h"
 #include <iostream>
 
 void showProgress(ProgramParamerters & params) {

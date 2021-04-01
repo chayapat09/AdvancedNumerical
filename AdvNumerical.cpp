@@ -1,14 +1,14 @@
 #include <iostream>
 
 
-#define _DEBUG_
+#define DEBUG
 
 #include "ProgramParameters.h"
 #include "Field.h"
 #include "FG.h"
 #include "RHS.h"
 #include "Poisson.h"
-#include "ProgressBar.h"
+#include "./utils/ProgressBar.h"
 // using namespace std; 
 
 /* Discramer
@@ -58,7 +58,7 @@ void setSpecificBoundaryCondition(VelocityField &velocity , ProgramParamerters &
     The new velocities are calculated according to (3.34) and (3.35).
 */
 void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pressure , ProgramParamerters & params ) {
-    #ifdef _DEBUG_
+    #ifdef DEBUG
     std::cout << "Velocity Field Are updated!" << '\n';
     #endif
 }
@@ -105,7 +105,8 @@ int main() {
         initRHS(rhs , programParameter);
         computeRHS(rhs ,fg ,  programParameter);
 
-        // 8.POISSON
+        // 8.POISSON 
+        // Note : pressureField is updated in here
         poission(pressureField , rhs , programParameter);
 
         // 9.ADAP_UV
@@ -113,7 +114,7 @@ int main() {
 
         programParameter.timeSteppingData.n++;
 
-        #ifndef _DEBUG_
+        #ifndef DEBUG
 
         if (programParameter.timeSteppingData.n % checkPointPeriod == 0) {
             showProgress(programParameter);

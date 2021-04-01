@@ -3,15 +3,6 @@
 #include <iostream>
 #include "Field.h"
 #include "ProgramParameters.h"
-// class FG {
-//     FIELD< FieldDouble > * F;
-//     FIELD< FieldDouble > * G;
-
-//     ~FG() {
-//         delete[] F;
-//         delete[] G;
-//     }
-// };
 
 class FG {
     public :
@@ -47,7 +38,7 @@ class FG {
 };
 
 void initFG(FG & fg , ProgramParamerters & params) {
-    #ifdef _DEBUG_
+    #ifdef DEBUG
     std::cout << "INIT FG" << '\n';
     #endif
     // fg.F = new FIELD< FieldDouble >(...)
@@ -59,7 +50,7 @@ void computeFG(VelocityField & velocity ,FG & fg,  ProgramParamerters & params) 
         /*
             COMPUTE F and G FIELDS using Velocity FIELDS and ProgramParamerters
         */
-        #ifdef _DEBUG_
+        #ifdef DEBUG
         std::cout << "Computed FG" << '\n';
         #endif
 }

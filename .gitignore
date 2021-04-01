@@ -1044,3 +1044,5 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Automated Test generated files
+generate*

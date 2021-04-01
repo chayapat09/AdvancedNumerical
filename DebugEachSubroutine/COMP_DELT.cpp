@@ -1,6 +1,6 @@
 #include <iostream>
 
-#define _DEBUG_
+#define DEBUG
 
 #include "../ProgramParameters.h"
 #include "../Field.h"

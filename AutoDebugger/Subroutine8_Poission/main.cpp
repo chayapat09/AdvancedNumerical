@@ -1,6 +1,6 @@
 #include <iostream>
 
-#define _DEBUG_
+#define DEBUG
 
 #include "../../ProgramParameters.h"
 #include "../../Poisson.h"
@@ -28,4 +28,5 @@ int main() {
     poission(p , rhs , po);
 
     p.p->printField();
+    // Automated Test ??
 }
