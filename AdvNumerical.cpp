@@ -61,6 +61,30 @@ void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pre
     #ifdef DEBUG
     std::cout << "Velocity Field Are updated!" << '\n';
     #endif
+
+    int imax = params.geometryData.imax, jmax = params.geometryData.jmax;
+    double delt = params.timeSteppingData.delt, delx = params.geometryData.delx, dely = params.geometryData.dely;
+
+    //set new u
+    for(int i=1; i <= imax-1; i++){
+        for(int j=1; j <= jmax; j++){
+            double new_u = fg.F->get(i, j).val - ( delt/delx ) * \
+                           ( pressure.p->get(i+1, j).val - pressure.p->get(i, j).val );
+                           
+            velocity.u->set(i, j, new_u);             
+        }
+    }
+
+    //set new v
+    for(int i=1; i <= imax; i++){
+        for(int j=1; j <= jmax-1; j++){
+            double new_v = fg.G->get(i, j).val - ( delt/dely ) * \
+                           ( pressure.p->get(i, j+1).val - pressure.p->get(i, j).val );
+            
+            velocity.v->set(i, j, new_v);
+        }
+    }
+
 }
 
 int main() {

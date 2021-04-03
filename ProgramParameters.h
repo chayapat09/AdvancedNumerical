@@ -65,8 +65,8 @@ void initProblemParams(ProgramParamerters & params){
     params.geometryData.xlength = 10;
     // params.geometryData.imax = 20;
     // params.geometryData.jmax = 20;
-    params.geometryData.imax = 9;
-    params.geometryData.jmax = 15;
+    params.geometryData.imax = 5;
+    params.geometryData.jmax = 5;
     params.geometryData.delx = 0.1;
     params.geometryData.dely = 0.1;
     params.timeSteppingData.delt = 0.025;
