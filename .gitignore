@@ -1046,3 +1046,5 @@ dkms.conf
 
 # Automated Test generated files
 generate*
+
+paraview/
