@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <fstream>
 
 #define DEBUG
 
@@ -87,6 +87,15 @@ void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pre
 
 }
 
+void saveParaview(VelocityField & velocityField , PressureField & pressureField ,ProgramParamerters & params ) {
+    // Write Pressure Field
+    std::ofstream f;
+    f.open("./paraview/P_" + std::to_string(params.runtimeVariable.paraviewCounter) + ".vtk");
+    pressureField.p->paraview_VTK(f , params);
+    f.close();
+    
+}
+
 int main() {
 
     
@@ -136,12 +145,16 @@ int main() {
         // 9.ADAP_UV
         updateVelocityField(velocityField , fg , pressureField , programParameter);
 
-        programParameter.timeSteppingData.n++;
+        programParameter.runtimeVariable.n++;
 
         #ifndef DEBUG
 
-        if (programParameter.timeSteppingData.n % checkPointPeriod == 0) {
+        if (programParameter.runtimeVariable.n % checkPointPeriod == 0) {
             showProgress(programParameter);
+            saveParaview(velocityField , pressureField , programParameter);
+            programParameter.runtimeVariable.paraviewCounter++;
+            // Neet to be at Last Scope Execution
+            // saveCheckPoint(velocityField , pressureField , programParameter ); 
         }
         #endif
     }

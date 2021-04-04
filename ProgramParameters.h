@@ -20,7 +20,7 @@ struct TimeSteppingData {
     double t_end;
     double delt;
     double tau;
-    long long n;
+    // long long n;
 };
 
 struct PressureIterationData {
@@ -45,11 +45,18 @@ struct ProblemParameters {
     int wS;
 };
 
+struct RuntimeVariable {
+    long long n;
+    long long paraviewCounter;
+
+};
+
 struct ProgramParamerters {
     GeomertyData geometryData;
     TimeSteppingData timeSteppingData;
     PressureIterationData pressureiterationData;
     ProblemParameters problemParameters;
+    RuntimeVariable runtimeVariable;
 };
 
 // Abstract Function
@@ -86,7 +93,8 @@ void initProblemParams(ProgramParamerters & params){
     params.timeSteppingData.t_end = 10;
 
     params.timeSteppingData.t = 0;
-    params.timeSteppingData.n = 0;
+    params.runtimeVariable.n = 0;
+    params.runtimeVariable.paraviewCounter = 0;
 
     // Ex.
     // params.geometryData.delx = 20;

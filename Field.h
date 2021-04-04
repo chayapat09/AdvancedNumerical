@@ -188,6 +188,43 @@ class FIELD {
             throw "This field is still empty!";
         }
 
+        /*
+            Use .vtk file extension format in paraview
+        */
+        void paraview_VTK(std::ofstream & myfile, ProgramParamerters & params){
+            //------------------------------------------------------------//
+            // Paraview header
+            myfile << "# vtk DataFile Version 2.0\n";
+            myfile << "FlowField\n";
+            myfile << "ASCII\n";
+
+            // Grid
+            myfile << "DATASET STRUCTURED_GRID\n";
+            myfile << "DIMENSIONS " << this->xSize << " " << 1 << " " << this->ySize << "\n";
+            myfile << "POINTS " << this->ySize*1*this->xSize << " float\n";
+
+            for (int y = this->ySize - 1 ; y >= 0 ; y--) {
+                for (int x = 0 ; x < this->xSize ; x++) {
+                    myfile << params.geometryData.delx*x << " " << params.geometryData.dely*y << " 0\n";
+                }
+            }
+            
+            // Data
+            myfile << "\n";
+            myfile << "POINT_DATA";
+            myfile << " " << this->xSize * this->ySize << "\n";
+
+            myfile << "\n";
+            myfile << "SCALARS PHI float 1\n";
+            myfile << "LOOKUP_TABLE default\n";
+            for (int y = this->ySize - 1 ; y >= 0 ; y--) {
+                for (int x = 0 ; x < this->xSize ; x++) {
+                    myfile << get(x,y) << '\n';
+                }
+            }
+
+        }
+
         NodeT& get(int x , int y) {
             return (this->Field)[x][y];
         }
