@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#define DEBUG
+// #define DEBUG
 
 #include "ProgramParameters.h"
 #include "Field.h"
@@ -202,6 +202,8 @@ int main() {
         // 8.POISSON 
         // Note : pressureField is updated in here
         poission(pressureField , rhs , programParameter);
+
+        pressureField.p->printField();
 
         // 9.ADAP_UV
         updateVelocityField(velocityField , fg , pressureField , programParameter);

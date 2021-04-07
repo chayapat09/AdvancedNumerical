@@ -38,7 +38,7 @@ void initRHS(RHS & rhs , ProgramParamerters & params) {
     #ifdef DEBUG
     std::cout << "INIT RHS" << '\n';
     #endif
-    // rhs.rhs = new FIELD< FieldDouble >(...)
+    rhs.Rhs = new FIELD<FieldDouble>(params.geometryData.imax+2 , params.geometryData.jmax+2);
     // Uncomment and then add to ...
 }
 

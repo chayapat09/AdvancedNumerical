@@ -362,10 +362,10 @@ void INIT_UVP(VelocityField &velocity , PressureField &pressure , ProgramParamer
     std::cout << params.geometryData.imax << ' ' << params.geometryData.jmax << '\n';
     #endif
 
-    velocity.u = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
-    velocity.v = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
+    velocity.u = new FIELD<FieldDouble>(params.geometryData.imax+2 , params.geometryData.jmax+2);
+    velocity.v = new FIELD<FieldDouble>(params.geometryData.imax+2 , params.geometryData.jmax+2);
 
-    pressure.p = new FIELD<FieldDouble>(params.geometryData.imax , params.geometryData.jmax);
+    pressure.p = new FIELD<FieldDouble>(params.geometryData.imax+2 , params.geometryData.jmax+2);
 
     (velocity.u)->setAll(params.problemParameters.UI);
     (velocity.v)->setAll(params.problemParameters.VI);

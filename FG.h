@@ -41,8 +41,8 @@ void initFG(FG & fg , ProgramParamerters & params) {
     #ifdef DEBUG
     std::cout << "INIT FG" << '\n';
     #endif
-    // fg.F = new FIELD< FieldDouble >(...)
-    // fg.G = new FIELD< FieldDouble >(...)
+    fg.F = new FIELD<FieldDouble>(params.geometryData.imax+2 , params.geometryData.jmax+2);
+    fg.G = new FIELD<FieldDouble>(params.geometryData.imax+2 , params.geometryData.jmax+2);
     // Uncomment and then add to ...
 }
 
