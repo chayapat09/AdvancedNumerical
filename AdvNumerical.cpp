@@ -39,8 +39,69 @@ void computeDelt(VelocityField &velocity, ProgramParamerters & params){
 The boundary values for the arrays U and V are set depending on the boundary 
 data parameters wW,wE,wN,wS according to the formulas in Section 3.1.2.
 */
-void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params) {
-    
+void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params, int wW, int wE, int wN, int wS) {
+    int imax = params.geometryData.imax, jmax = params.geometryData.jmax;
+    FIELD<FieldDouble> u = *velocity.u, v = *velocity.v;
+
+    //flag value = 2 is no slip conditions
+    if(wW == 2){
+        for(int j=1; j <= jmax; j++){
+            double val = -1 * v.get(1, j).val;
+            v.set(0, j, val); 
+        }
+    }
+    if(wE == 2){
+        for(int j=1; j <= jmax; j++){
+            double val = -1 * v.get(imax, j).val;
+            v.set(imax+1, j, val);
+        }
+    }
+    if(wS == 2){
+        for(int i=1; i <= imax; i++){
+            double val = -1 * u.get(i, 1).val;
+            u.set(i, 0, val);
+        }
+    }
+    if(wN == 2){
+        for(int i=1; i <= imax; i++){
+            double val = -1 * u.get(i, jmax).val;
+            u.set(i, jmax+1, val);
+        }
+    }
+
+    //flag value = 3 is outflow conditions
+    if(wW == 3){
+        for(int j=1; j <= jmax; j++){
+            double u_val = u.get(1, j).val;
+            u.set(0, j, u_val);
+            double v_val = v.get(1, j).val;
+            v.set(0, j, v_val);
+        }
+    }
+    if(wE == 3){
+        for(int j=1; j <= jmax; j++){
+            double u_val = u.get(imax-1, j).val;
+            u.set(imax, j, u_val);
+            double v_val = v.get(imax, j).val;
+            v.set(imax+1, j, v_val);
+        }
+    }
+    if(wS == 3){
+        for(int i=1; i <= imax; i++){
+            double u_val = u.get(i, 1).val;
+            u.set(i, 0, u_val);
+            double v_val = v.get(i, 1).val;
+            v.set(i, 0, v_val);
+        }
+    }
+    if(wN == 3){
+        for(int i=1; i <= imax; i++){
+            double u_val = u.get(i, jmax).val;
+            u.set(i, jmax+1, u_val);
+            double v_val = v.get(i, jmax-1).val;
+            v.set(i, jmax, v_val);
+        }
+    }
 }
 
 
@@ -122,10 +183,10 @@ int main() {
         // computeDelt(pressureField, programParameter);
 
         // 4.SETBCOND
-        setBoundaryCondition(velocityField , programParameter);
+        setBoundaryCondition(velocityField , programParameter, 3, 3, 2, 2);
 
         // 5.SETSPECBCOND
-        setSpecificBoundaryCondition(velocityField , programParameter);
+        // setSpecificBoundaryCondition(velocityField , programParameter);
 
 
         // 6.COMP_FG
