@@ -13,7 +13,7 @@ double dAbs(double d) {
 }
 
 double max_norm(FIELD<FieldDouble> & f , ProgramParamerters & params) {
-    double max_norm = std::abs(f[1][1].val);
+    double max_norm = dAbs(f[1][1].val);
     for (int i = 1 ; i <= params.geometryData.imax ; i++) {
         for (int j = 1 ; j <= params.geometryData.jmax ; j++) {
             max_norm = std::max(max_norm , dAbs(f[i][j].val));

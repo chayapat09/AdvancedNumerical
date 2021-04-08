@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-// #define DEBUG
+#define DEBUG
 
 #include "ProgramParameters.h"
 #include "Field.h"
@@ -41,34 +41,34 @@ data parameters wW,wE,wN,wS according to the formulas in Section 3.1.2.
 */
 void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params, int wW, int wE, int wN, int wS) {
     int imax = params.geometryData.imax, jmax = params.geometryData.jmax;
-    FIELD<FieldDouble> u = *velocity.u, v = *velocity.v;
+    FIELD<FieldDouble> & u = *velocity.u, & v = *velocity.v;
 
     //flag value = 2 is no slip conditions
     if(wW == 2){
         for(int j=1; j <= jmax; j++){
             double val = -1 * v.get(1, j).val;
-            v.set(0, j, val); 
+            v.set(0, j, 0); 
         }
     }
     if(wE == 2){
         for(int j=1; j <= jmax; j++){
             double val = -1 * v.get(imax, j).val;
-            v.set(imax+1, j, val);
+            v.set(imax+1, j, 0);
         }
     }
     if(wS == 2){
         for(int i=1; i <= imax; i++){
             double val = -1 * u.get(i, 1).val;
-            u.set(i, 0, val);
+            u.set(i, 0, 0);
         }
     }
     if(wN == 2){
         for(int i=1; i <= imax; i++){
             double val = -1 * u.get(i, jmax).val;
-            u.set(i, jmax+1, val);
+            u.set(i, jmax+1, 0);
         }
     }
-
+    
     //flag value = 3 is outflow conditions
     if(wW == 3){
         for(int j=1; j <= jmax; j++){
@@ -183,7 +183,7 @@ int main() {
         // computeDelt(pressureField, programParameter);
 
         // 4.SETBCOND
-        setBoundaryCondition(velocityField , programParameter, 3, 3, 2, 2);
+        setBoundaryCondition(velocityField , programParameter, 4, 3, 2, 2);
 
         // 5.SETSPECBCOND
         // setSpecificBoundaryCondition(velocityField , programParameter);
@@ -221,5 +221,7 @@ int main() {
         }
         #endif
     }
+
+    velocityField.u->printField();
     
 }

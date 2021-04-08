@@ -70,8 +70,8 @@ void initProblemParams(ProgramParamerters & params){
     // Initialized Problem parameters
     params.geometryData.xlength = 1;
     params.geometryData.ylength = 1;
-    params.geometryData.imax = 10;
-    params.geometryData.jmax = 10;
+    params.geometryData.imax = 20;
+    params.geometryData.jmax = 20;
     params.geometryData.delx = 0.1;
     params.geometryData.dely = 0.1;
     params.timeSteppingData.delt = 0.001;
@@ -85,14 +85,18 @@ void initProblemParams(ProgramParamerters & params){
 
     params.problemParameters.PI = 1;
     params.problemParameters.UI = 1;
-    params.problemParameters.VI = 1;
+    params.problemParameters.VI = 0;
     params.problemParameters.Re = 20;
 
-    params.timeSteppingData.t_end = 10;
+    params.timeSteppingData.t_end = 0.7;
 
     params.timeSteppingData.t = 0;
     params.runtimeVariable.n = 0;
     params.runtimeVariable.paraviewCounter = 0;
+
+    params.pressureiterationData.itermax = 1000;
+    params.pressureiterationData.eps = 0.0001;
+    params.pressureiterationData.omg = 1.2;
 
     // Ex.
     // params.geometryData.delx = 20;
