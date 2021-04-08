@@ -81,7 +81,7 @@ void initProblemParams(ProgramParamerters & params){
     params.problemParameters.wN = 2;
     params.problemParameters.wS = 2;
     params.problemParameters.wE = 3;
-    params.problemParameters.wW = 4;
+    params.problemParameters.wW = 3;
 
     params.problemParameters.PI = 1;
     params.problemParameters.UI = 1;

@@ -45,6 +45,36 @@ void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params)
     int wS = params.problemParameters.wS, wN = params.problemParameters.wN;
     FIELD<FieldDouble> &u = *velocity.u, &v = *velocity.v;
 
+    //flag value = 2 is no slip conditions
+    if(wW == 2){
+        for(int j=1; j <= jmax; j++){
+            double val = -1 * v.get(1, j).val;
+            v.set(0, j, val); 
+            u.set(0, j, 0);
+        }
+    }
+    if(wE == 2){
+        for(int j=1; j <= jmax; j++){
+            double val = -1 * v.get(imax, j).val;
+            v.set(imax+1, j, val);
+            u.set(imax, j, 0);
+        }
+    }
+    if(wS == 2){
+        for(int i=1; i <= imax; i++){
+            double val = -1 * u.get(i, 1).val;
+            u.set(i, 0, val);
+            v.set(i, 0, 0);
+        }
+    }
+    if(wN == 2){
+        for(int i=1; i <= imax; i++){
+            double val = -1 * u.get(i, jmax).val;
+            u.set(i, jmax+1, val);
+            v.set(i, jmax, 0);
+        }
+    }
+
     //flag value = 3 is outflow conditions
     if(wW == 3){
         for(int j=1; j <= jmax; j++){
@@ -78,32 +108,6 @@ void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params)
             v.set(i, jmax, v_val);
         }
     }
-
-    //flag value = 2 is no slip conditions
-    if(wW == 2){
-        for(int j=1; j <= jmax; j++){
-            double val = -1 * v.get(1, j).val;
-            v.set(0, j, val); 
-        }
-    }
-    if(wE == 2){
-        for(int j=1; j <= jmax; j++){
-            double val = -1 * v.get(imax, j).val;
-            v.set(imax+1, j, val);
-        }
-    }
-    if(wS == 2){
-        for(int i=1; i <= imax; i++){
-            double val = -1 * u.get(i, 1).val;
-            u.set(i, 0, val);
-        }
-    }
-    if(wN == 2){
-        for(int i=1; i <= imax; i++){
-            double val = -1 * u.get(i, jmax).val;
-            u.set(i, jmax+1, val);
-        }
-    }
 }
 
 
@@ -114,7 +118,13 @@ the bound- ary data on parts of a boundary which has been previously assigned a 
 by one of the flags wW, wE, wN, or wS (for example, a small in or outflow area within a solid wall).
 */
 void setSpecificBoundaryCondition(VelocityField &velocity , ProgramParamerters & params) {
+    int imax = params.geometryData.imax, jmax = params.geometryData.jmax;
+    FIELD<FieldDouble> &u = *velocity.u, &v = *velocity.v;
 
+    for(int j=0; j < jmax+2; j++){
+        u.set(0, j, 1);
+        v.set(0, j, 0);
+    }
 }
 
 /*
@@ -198,7 +208,7 @@ int main() {
         setBoundaryCondition(velocityField , programParameter);
 
         // 5.SETSPECBCOND
-        // setSpecificBoundaryCondition(velocityField , programParameter);
+        setSpecificBoundaryCondition(velocityField , programParameter);
 
 
         // 6.COMP_FG
