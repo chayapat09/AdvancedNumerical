@@ -116,7 +116,7 @@ void computeFG(VelocityField & velocity ,FG & fg,  ProgramParamerters & params) 
             double exp3_3 = ( std::abs( velocity.u->get(i, j).val + velocity.u->get(i, j+1).val )/2. ) * \
                             ( ( velocity.v->get(i, j).val - velocity.v->get(i+1, j).val )/ 2. );
             double exp3_4 = ( std::abs( velocity.u->get(i-1, j).val + velocity.u->get(i-1, j+1).val )/2. ) * \
-                            ( ( velocity.v->get(i-1, j).val + velocity.v->get(i, j).val )/ 2. );
+                            ( ( velocity.v->get(i-1, j).val - velocity.v->get(i, j).val )/ 2. );
             double exp3 = (1/delx) * ( exp3_1 - exp3_2 ) + (gamma/delx)*( exp3_3 - exp3_4 );
 
             double exp4_1 = ( velocity.v->get(i, j).val + velocity.v->get(i, j+1).val ) / 2;

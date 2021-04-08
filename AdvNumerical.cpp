@@ -39,35 +39,11 @@ void computeDelt(VelocityField &velocity, ProgramParamerters & params){
 The boundary values for the arrays U and V are set depending on the boundary 
 data parameters wW,wE,wN,wS according to the formulas in Section 3.1.2.
 */
-void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params, int wW, int wE, int wN, int wS) {
+void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params) {
     int imax = params.geometryData.imax, jmax = params.geometryData.jmax;
-    FIELD<FieldDouble> u = *velocity.u, v = *velocity.v;
-
-    //flag value = 2 is no slip conditions
-    if(wW == 2){
-        for(int j=1; j <= jmax; j++){
-            double val = -1 * v.get(1, j).val;
-            v.set(0, j, val); 
-        }
-    }
-    if(wE == 2){
-        for(int j=1; j <= jmax; j++){
-            double val = -1 * v.get(imax, j).val;
-            v.set(imax+1, j, val);
-        }
-    }
-    if(wS == 2){
-        for(int i=1; i <= imax; i++){
-            double val = -1 * u.get(i, 1).val;
-            u.set(i, 0, val);
-        }
-    }
-    if(wN == 2){
-        for(int i=1; i <= imax; i++){
-            double val = -1 * u.get(i, jmax).val;
-            u.set(i, jmax+1, val);
-        }
-    }
+    int wW = params.problemParameters.wW, wE = params.problemParameters.wE;
+    int wS = params.problemParameters.wS, wN = params.problemParameters.wN;
+    FIELD<FieldDouble> &u = *velocity.u, &v = *velocity.v;
 
     //flag value = 3 is outflow conditions
     if(wW == 3){
@@ -100,6 +76,32 @@ void setBoundaryCondition(VelocityField &velocity , ProgramParamerters & params,
             u.set(i, jmax+1, u_val);
             double v_val = v.get(i, jmax-1).val;
             v.set(i, jmax, v_val);
+        }
+    }
+
+    //flag value = 2 is no slip conditions
+    if(wW == 2){
+        for(int j=1; j <= jmax; j++){
+            double val = -1 * v.get(1, j).val;
+            v.set(0, j, val); 
+        }
+    }
+    if(wE == 2){
+        for(int j=1; j <= jmax; j++){
+            double val = -1 * v.get(imax, j).val;
+            v.set(imax+1, j, val);
+        }
+    }
+    if(wS == 2){
+        for(int i=1; i <= imax; i++){
+            double val = -1 * u.get(i, 1).val;
+            u.set(i, 0, val);
+        }
+    }
+    if(wN == 2){
+        for(int i=1; i <= imax; i++){
+            double val = -1 * u.get(i, jmax).val;
+            u.set(i, jmax+1, val);
         }
     }
 }
@@ -151,9 +153,19 @@ void updateVelocityField(VelocityField & velocity ,FG & fg , PressureField & pre
 void saveParaview(VelocityField & velocityField , PressureField & pressureField ,ProgramParamerters & params ) {
     // Write Pressure Field
     std::ofstream f;
-    f.open("./paraview/P_" + std::to_string(params.runtimeVariable.paraviewCounter) + ".vtk");
+    f.open("./paraviewP/P_" + std::to_string(params.runtimeVariable.paraviewCounter) + ".vtk");
     pressureField.p->paraview_VTK(f , params);
     f.close();
+
+    std::ofstream f_u;
+    f_u.open("./paraviewU/U_" + std::to_string(params.runtimeVariable.paraviewCounter) + ".vtk");
+    velocityField.u->paraview_VTK(f_u , params);
+    f_u.close();
+
+    std::ofstream f_v;
+    f_v.open("./paraviewV/V_" + std::to_string(params.runtimeVariable.paraviewCounter) + ".vtk");
+    velocityField.v->paraview_VTK(f_v , params);
+    f_v.close();
     
 }
 
@@ -183,7 +195,7 @@ int main() {
         // computeDelt(pressureField, programParameter);
 
         // 4.SETBCOND
-        setBoundaryCondition(velocityField , programParameter, 3, 3, 2, 2);
+        setBoundaryCondition(velocityField , programParameter);
 
         // 5.SETSPECBCOND
         // setSpecificBoundaryCondition(velocityField , programParameter);
