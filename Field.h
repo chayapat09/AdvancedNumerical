@@ -110,7 +110,7 @@ class FIELD {
             int xSize = 1;
             int ySize = 1;
             is >> xSize >> ySize;
-            FIELD tmp(xSize,ySize);
+            FIELD<NodeT , T> tmp(xSize,ySize);
             for (int y = ySize - 1 ; y >= 0 ; y--) {
                 for (int x = 0 ; x < xSize ; x++) {
                     is >> tmp[x][y];

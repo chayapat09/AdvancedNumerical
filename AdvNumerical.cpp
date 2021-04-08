@@ -233,5 +233,7 @@ int main() {
         }
         #endif
     }
+
+    std::cout << *velocityField.u;
     
 }

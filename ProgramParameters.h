@@ -81,7 +81,7 @@ void initProblemParams(ProgramParamerters & params){
     params.problemParameters.wN = 2;
     params.problemParameters.wS = 2;
     params.problemParameters.wE = 3;
-    params.problemParameters.wW = 3;
+    params.problemParameters.wW = 4;
 
     params.problemParameters.PI = 1;
     params.problemParameters.UI = 1;
@@ -93,6 +93,12 @@ void initProblemParams(ProgramParamerters & params){
     params.timeSteppingData.t = 0;
     params.runtimeVariable.n = 0;
     params.runtimeVariable.paraviewCounter = 0;
+
+    params.pressureiterationData.eps = 0.0001;
+    params.pressureiterationData.itermax = 1000;
+    params.pressureiterationData.omg = 1.2;
+    
+    params.pressureiterationData.gamma = 0;
 
     // Ex.
     // params.geometryData.delx = 20;
